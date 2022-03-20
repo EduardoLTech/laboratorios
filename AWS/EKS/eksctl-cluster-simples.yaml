@@ -27,10 +27,10 @@ vpc:
 managedNodeGroups:
   - name: ng-1
     minSize: 1
-    maxSize: 5  
-    desiredCapacity: 4
+    maxSize: 3  
+    desiredCapacity: 2
     volumeSize: 20
-    instanceType: t2.micro
+    instanceType: t2.small
     subnets:
       - public-one
       - public-two
