@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-nginx-color-blue
+spec:
+  selector:
+    app: deploy-color-blue
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-api
+    spec:
+      containers:
+      - name: api
+        image: {{ .Values.api.image }}
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+        imagePullPolicy: Always   
+        envFrom:
+          - configMapRef:
+              name: {{  .Release.Name }}-api-configmap
+        env:
+        - name: Mongo__User
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_INITDB_ROOT_USERNAME
+              {{- if empty .Values.mongodb.existSecret }}
+              name: {{ .Release.Name }}-mongodb-secret
+              {{- else }}
+              name: {{ .Values.mongodb.existSecret }}
+              {{- end }}
+        - name: Mongo_password
+          valueFrom:
+            secretKeyRef:
+              key: MONGO_INITDB_ROOT_PASSWORD
+              {{- if empty .Values.mongodb.existSecret }}
+              name: {{ .Release.Name }}-mongodb-secret
+              {{- else }}
+              name: {{ .Values.mongodb.existSecret }}
+              {{- end }}

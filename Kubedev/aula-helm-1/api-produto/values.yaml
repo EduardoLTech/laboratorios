@@ -1,0 +1,11 @@
+api:
+  image: teclinux/pedelogo-catalogo:v1.0.0
+  serviceType: NodePort
+
+mongodb:
+  tag: 4.2.8
+  #existSecret: umsegredo
+  credentials:
+    userName: mongouser
+    userPassword: mongopwd
+    databaseName: admin

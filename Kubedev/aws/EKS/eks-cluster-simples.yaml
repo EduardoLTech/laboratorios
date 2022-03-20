@@ -1,0 +1,48 @@
+# An example of ClusterConfig object specifying subnets for a nodegroup
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: meucluster
+  region: us-east-1
+
+vpc:
+  id: vpc-0182d3fa2fdc8d5cd
+  cidr: "10.0.0.0/16"
+  securityGroup: sg-0eb6a2fae7f826a9a
+  subnets:
+    public:
+      public-one:
+        id: subnet-0198599c43fc0f695
+      public-two:
+        id: subnet-0c8d00adc90409c4c
+    private:
+      private-one:
+        id: subnet-005a7e987029a468c
+      private-two:
+        id: subnet-0b0317e6ea7338754
+  
+
+managedNodeGroups:
+  - name: ng-1
+    minSize: 1
+    maxSize: 5  
+    desiredCapacity: 4
+    volumeSize: 20
+    instanceType: t2.micro
+    subnets:
+      - public-one
+      - public-two
+    ssh:
+      allow: true
+      publicKeyPath: ~/.ssh/myNodeKey.pub
+
+# nodegroups:
+#   - name: ng-2
+#     instanceType: t2.micro
+#     desiredCapacity: 2
+#     privateNetworking: true
+#     subnets:
+#       - private-one
+#       - private-two

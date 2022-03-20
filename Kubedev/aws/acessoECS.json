@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "kms:Decrypt",
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": [
+        "<SECRET_ARN>",
+        "<CMK_ARN>"     
+      ]
+    }
+  ]
+}
+
+
+
+
+1)
+arn:aws:kms:us-east-1:907437992237:key/d12c23e1-a4ff-468b-8f9c-75c093d6b43b
+
+2) kubedev-3
+
+3)
+aws secretsmanager create-secret \
+--name dev/DockerHubSecret \
+--description "Docker Hub Secret" \
+--kms-key-id alias/kubedev-3 \
+--secret-string '{"username":"teclinux","password":"5106b8eb-593a-4429-b08e-498fcd12c21f"}'
+{
+    "ARN": "arn:aws:secretsmanager:us-east-1:907437992237:secret:dev/DockerHubSecret-tHxEZm",
+    "Name": "dev/DockerHubSecret",
+    "VersionId": "42444cf4-0f1a-4a19-87eb-24338e667dd2"
+}
+
+4)
+
+aws iam create-role \
+--role-name ecsTaskExecutionRole2 \
+--assume-role-policy-document file://ecs-trust-policy.json

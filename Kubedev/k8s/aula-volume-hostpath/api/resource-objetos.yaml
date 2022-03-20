@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: computer-object
+spec:
+  hard:
+    pods: "12"

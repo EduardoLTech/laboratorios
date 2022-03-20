@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sistema-deployment
+spec:
+  selector:
+    matchLabels:
+      app: sistema
+  template:
+    metadata:
+      labels:
+        app: sistema
+    spec:
+      containers:
+      - name: sistema
+        image: teclinux/pedelogo-catalogo:v1.0.0
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+        imagePullPolicy: Always   
+        env:
+        - name: Mongo__Host
+          value: "service-banco"
+        - name: Mongo__User
+          value: "mongouser"
+        - name: Mongo_password
+          value: "mongopwd"
+        - name: Mongo__Port
+          value: "27017"
+        - name: Mongo__DataBase
+          value: "admin"        

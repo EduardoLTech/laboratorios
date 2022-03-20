@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-nginx-color-green
+spec:
+  selector:
+    matchLabels:
+      app: deploy-color-green
+  template:
+    metadata:
+      labels:
+        app: deploy-color-green
+    spec:
+      containers:
+      - name: deploy-color-green
+        image: teclinux/site-color:green
+        ports:
+        - containerPort: 80
+          

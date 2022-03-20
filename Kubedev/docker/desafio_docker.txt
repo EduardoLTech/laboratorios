@@ -1,0 +1,37 @@
+﻿2)
+
+Mongo DB
+docker container run -d --network dudanw -v mongo_vol:/data/db -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongouser -e MONGO_INITDB_ROOT_PASSWORD=mongopwd mongo
+
+
+
+MariaDB
+docker run -d -p 3306:3306 --network dudanw -v mariadb_vol:/data/db --env MARIADB_USER=mariauser --env MARIADB_PASSWORD=mariapwd --env MARIADB_ROOT_PASSWORD=mariaroot  --name mariadb mariadb:latest
+
+docker run --name phpmyadmin -d --link mariadb:db -p 8080:80 --network dudanw phpmyadmin
+
+
+
+Postgres
+docker run -d --network dudanw --name postgre -v postgredb_vol:/data/db -p 5432:5432 -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=postgrepwd postgres
+
+docker container run -d -p 80:80 --network dudanw -e 'PGADMIN_DEFAULT_EMAIL=tec.linux@gmail.com' -e 'PGADMIN_DEFAULT_PASSWORD=pgadmin' dpage/pgadmin4
+
+
+
+Redis
+docker container run -d --network dudanw --name redis -v redisdb_vol:/data/db -p 6379:6379 redis
+
+docker container run -d --network dudanw --rm --name redis-commander --env REDIS_HOSTS=redis -p 8081:8081   rediscommander/redis-commander:latest
+
+
+3)
+
+https://github.com/EduardoLTech/conversao-temperatura/tree/master
+docker container run -d -p 8080:8080 teclinux/conversao-temperatura:v1
+
+https://github.com/EduardoLTech/conversao-distancia
+docker container run -d -p 80:5000 teclinux/conversao-distancia:v1
+
+https://github.com/EduardoLTech/conversao-peso
+docker container run -d -p 5000:80 teclinux/conversao-peso:v1
